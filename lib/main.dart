@@ -48,91 +48,114 @@ class _GameScreenState extends State<GameScreen> {
         ],*/
       ),
       body: _newScreen(),
-        drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-          DrawerHeader(
-          child: Text('Options',style: TextStyle(fontSize: 20),),
-          decoration: BoxDecoration(
-            color: _color,
-          ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'Options',
+                style: TextStyle(fontSize: 20),
+              ),
+              decoration: BoxDecoration(
+                color: _color,
+              ),
+            ),
+            ListTile(
+              title: Text('Reset'),
+              onTap: () {
+                // Update the state of the app
+                setState(() {
+                  resetGame();
+                });
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Change Colour'),
+              onTap: () {
+                // Update the state of the app
+                setState(() {
+                  _color =
+                      Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                          .withOpacity(1.0);
+                });
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(!useAi ? "Play With Computer" : 'Play With a Friend'),
+              onTap: () {
+                // Update the state of the app
+                setState(() {
+                  useAi = !useAi;
+                  resetGame();
+                });
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Easy Mode'),
+              onChanged: (bool value) {
+                setState(() {
+                  value ? easyMode = true : easyMode = false;
+                });
+              },
+              value: easyMode,
+              selected: easyMode,
+            )
+          ],
         ),
-        ListTile(
-          title: Text('Reset'),
-          onTap: () {
-            // Update the state of the app
-            setState(() {
-              resetGame();
-            });
-            // Then close the drawer
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-            title: Text('Change Colour'),
-            onTap: () {
-              // Update the state of the app
-              setState(() {
-                _color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-              });
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-        ),
-          ListTile(
-            title: Text(!useAi ? "Play With Computer":'Play With a Friend'),
-            onTap: () {
-              // Update the state of the app
-              setState(() {
-                useAi = !useAi;
-                resetGame();
-              });
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-
-          CheckboxListTile(
-            title: Text('Easy Mode'),
-            onChanged: (bool value) { setState(() {
-              value? easyMode = true: easyMode = false;
-            });  }, value: easyMode,
-            selected: easyMode,
-          )
-              ],
-          ),
-        ),
+      ),
     );
   }
 
   bool detectWinner(String testWinner) {
-    if (arrayPlaceHolder[3] == testWinner && arrayPlaceHolder[5] == testWinner && arrayPlaceHolder[7] == testWinner) {
+    if (arrayPlaceHolder[3] == testWinner &&
+        arrayPlaceHolder[5] == testWinner &&
+        arrayPlaceHolder[7] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[1] == testWinner && arrayPlaceHolder[5] == testWinner && arrayPlaceHolder[9] == testWinner) {
+    if (arrayPlaceHolder[1] == testWinner &&
+        arrayPlaceHolder[5] == testWinner &&
+        arrayPlaceHolder[9] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[1] == testWinner && arrayPlaceHolder[4] == testWinner && arrayPlaceHolder[7] == testWinner) {
+    if (arrayPlaceHolder[1] == testWinner &&
+        arrayPlaceHolder[4] == testWinner &&
+        arrayPlaceHolder[7] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[2] == testWinner && arrayPlaceHolder[5] == testWinner && arrayPlaceHolder[8] == testWinner) {
+    if (arrayPlaceHolder[2] == testWinner &&
+        arrayPlaceHolder[5] == testWinner &&
+        arrayPlaceHolder[8] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[3] == testWinner && arrayPlaceHolder[6] == testWinner && arrayPlaceHolder[9] == testWinner) {
+    if (arrayPlaceHolder[3] == testWinner &&
+        arrayPlaceHolder[6] == testWinner &&
+        arrayPlaceHolder[9] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[1] == testWinner && arrayPlaceHolder[2] == testWinner && arrayPlaceHolder[3] == testWinner) {
+    if (arrayPlaceHolder[1] == testWinner &&
+        arrayPlaceHolder[2] == testWinner &&
+        arrayPlaceHolder[3] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[4] == testWinner && arrayPlaceHolder[5] == testWinner && arrayPlaceHolder[6] == testWinner) {
+    if (arrayPlaceHolder[4] == testWinner &&
+        arrayPlaceHolder[5] == testWinner &&
+        arrayPlaceHolder[6] == testWinner) {
       return true;
     }
-    if (arrayPlaceHolder[7] == testWinner && arrayPlaceHolder[8] == testWinner && arrayPlaceHolder[9] == testWinner) {
+    if (arrayPlaceHolder[7] == testWinner &&
+        arrayPlaceHolder[8] == testWinner &&
+        arrayPlaceHolder[9] == testWinner) {
       return true;
     }
     return false;
@@ -151,21 +174,27 @@ class _GameScreenState extends State<GameScreen> {
     return test;
   }
 
-  void showDialoge(String name){
+  void showDialoge(String name) {
     showDialog(
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           title: Text("The game is DONE!"),
-          content: Text(name == null ? "Game is a draw" : "The winner is $name"),
+          content:
+              Text(name == null ? "Game is a draw" : "The winner is $name"),
           actions: <Widget>[
-            FlatButton(onPressed: () {setState(() {
-              Navigator.of(context).pop();
-              resetGame();
-            });}, child: Text("Reset"))
+            FlatButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.of(context).pop();
+                    resetGame();
+                  });
+                },
+                child: Text("Reset"))
           ],
         );
-      }, context: this.context,
+      },
+      context: this.context,
     );
   }
 
@@ -173,6 +202,14 @@ class _GameScreenState extends State<GameScreen> {
     array = new List(9);
     arrayPlaceHolder = new List(10);
     word = "X";
+  }
+
+  void complexity() {
+    List newArrayPlaceHolder = new List(arrayPlaceHolder.length);
+    for (int i = 1; i < arrayPlaceHolder.length; i++) {
+      newArrayPlaceHolder[arrayPlaceHolder.length-i] = arrayPlaceHolder[i];
+    }
+    arrayPlaceHolder = newArrayPlaceHolder;
   }
 
   void Ai() {
@@ -185,35 +222,35 @@ class _GameScreenState extends State<GameScreen> {
         }
       }
       print(easyMode);
-        if (possible.isNotEmpty && easyMode) {
+      if (possible.isNotEmpty && easyMode) {
+        math.Random random = new math.Random();
+        updateGame(possible[random.nextInt(possible.length)]);
+      } else if (possible.isNotEmpty && !easyMode) {
+        int idealPosition = -1;
+        print(possible.length);
+        for (int i = 0; i < possible.length; i++) {
+          int element = possible[i] + 1;
+          arrayPlaceHolder[element] = "O";
+          if (detectWinner("O")) {
+            idealPosition = element;
+            arrayPlaceHolder[element] = null;
+            break;
+          }
+          arrayPlaceHolder[element] = "X";
+          if (detectWinner("X")) {
+            idealPosition = element;
+            arrayPlaceHolder[element] = null;
+            break;
+          }
+          arrayPlaceHolder[element] = null;
+        }
+        if (idealPosition == -1) {
           math.Random random = new math.Random();
           updateGame(possible[random.nextInt(possible.length)]);
-        } else if (possible.isNotEmpty && !easyMode) {
-          int idealPosition = -1;
-          print(possible.length);
-          for(int i = 0; i < possible.length; i++) {
-            int element = possible[i]+1;
-            arrayPlaceHolder[element] = "O";
-            if (detectWinner("O")) {
-              idealPosition = element;
-              arrayPlaceHolder[element] = null;
-              break;
-            }
-            arrayPlaceHolder[element] = "X";
-            if (detectWinner("X")) {
-              idealPosition = element;
-              arrayPlaceHolder[element] = null;
-              break;
-            }
-            arrayPlaceHolder[element] = null;
-          }
-          if (idealPosition == -1) {
-            math.Random random = new math.Random();
-            updateGame(possible[random.nextInt(possible.length)]);
-          } else {
-            updateGame(idealPosition-1);
-          }
+        } else {
+          updateGame(idealPosition - 1);
         }
+      }
     }
   }
 
@@ -230,21 +267,25 @@ class _GameScreenState extends State<GameScreen> {
         child: AnimatedContainer(
           margin: const EdgeInsets.all(10.0),
           alignment: Alignment.center,
-          color: _color,
+          curve: Curves.bounceIn,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            color: _color,
+          ),
           width: 90.0,
           child: AnimatedDefaultTextStyle(
-            style: arrayPlaceHolder[i+1] != null?
-
-            arrayPlaceHolder[i+1] == "X"? TextStyle(fontSize: 80): TextStyle(fontSize: 80, color: Colors.black) : TextStyle(fontSize: 80, color: Colors.deepPurple),
-
-
-
+            style: arrayPlaceHolder[i + 1] != null
+                ? arrayPlaceHolder[i + 1] == "X"
+                    ? TextStyle(fontSize: 80)
+                    : TextStyle(fontSize: 80, color: Colors.black)
+                : TextStyle(fontSize: 80, color: Colors.lightBlue),
             duration: Duration(seconds: 2),
-            child: Text(arrayPlaceHolder[i + 1] != null
-                ? arrayPlaceHolder[i + 1]
-                : ""),
+            child: Text(
+                arrayPlaceHolder[i + 1] != null ? arrayPlaceHolder[i + 1] : ""),
           ),
-          height: 90.0, duration: Duration(seconds: 2),
+          height: 90.0,
+          duration: Duration(seconds: 2),
         ),
       );
     }
@@ -254,7 +295,7 @@ class _GameScreenState extends State<GameScreen> {
       // horizontal, this produces 2 rows.
       crossAxisCount: 3,
       crossAxisSpacing: 2,
-
+      mainAxisSpacing: 10,
       children: List.generate(9, (index) {
         return Center(
           child: array[index],
@@ -267,8 +308,9 @@ class _GameScreenState extends State<GameScreen> {
     print((i + 1).toString());
     tapped = (i + 1).toString();
     setState(() {
-      if (arrayPlaceHolder[i+1] == null) {
-        arrayPlaceHolder[i + 1] = word; // move this down and remove AI for non-AI
+      if (arrayPlaceHolder[i + 1] == null) {
+        arrayPlaceHolder[i + 1] =
+            word; // move this down and remove AI for non-AI
         if (word == "O") {
           word = "X";
         } else if (word == "X") {
@@ -286,12 +328,11 @@ class _GameScreenState extends State<GameScreen> {
       if (detectWinner("O")) {
         showDialoge("O");
       }
-      _color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-
+      _color = Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+          .withOpacity(1.0);
       if (word == "O" && useAi) {
         Ai();
       }
-
     });
   }
 }
