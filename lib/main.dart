@@ -232,11 +232,17 @@ class _GameScreenState extends State<GameScreen> {
           alignment: Alignment.center,
           color: _color,
           width: 90.0,
-          child: Text(
-            arrayPlaceHolder[i + 1] != null
+          child: AnimatedDefaultTextStyle(
+            style: arrayPlaceHolder[i+1] != null?
+
+            arrayPlaceHolder[i+1] == "X"? TextStyle(fontSize: 80): TextStyle(fontSize: 80, color: Colors.black) : TextStyle(fontSize: 80, color: Colors.deepPurple),
+
+
+
+            duration: Duration(seconds: 2),
+            child: Text(arrayPlaceHolder[i + 1] != null
                 ? arrayPlaceHolder[i + 1]
-                : (i + 1).toString(),
-            style: TextStyle(fontSize: 80),
+                : ""),
           ),
           height: 90.0, duration: Duration(seconds: 2),
         ),
