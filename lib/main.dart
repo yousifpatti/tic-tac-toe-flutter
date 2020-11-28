@@ -209,7 +209,10 @@ class _GameScreenState extends State<GameScreen> {
     for (int i = 1; i < arrayPlaceHolder.length; i++) {
       newArrayPlaceHolder[arrayPlaceHolder.length-i] = arrayPlaceHolder[i];
     }
+    print(arrayPlaceHolder.toString());
     arrayPlaceHolder = newArrayPlaceHolder;
+
+    print(newArrayPlaceHolder);
   }
 
   void Ai() {
@@ -251,6 +254,9 @@ class _GameScreenState extends State<GameScreen> {
           updateGame(idealPosition - 1);
         }
       }
+    }
+    if (!easyMode) {
+      complexity();
     }
   }
 
