@@ -280,12 +280,12 @@ class _GameScreenState extends State<GameScreen> {
                     ? TextStyle(fontSize: 80)
                     : TextStyle(fontSize: 80, color: Colors.black)
                 : TextStyle(fontSize: 80, color: Colors.lightBlue),
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 1),
             child: Text(
                 arrayPlaceHolder[i + 1] != null ? arrayPlaceHolder[i + 1] : ""),
           ),
           height: 90.0,
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 1),
         ),
       );
     }
