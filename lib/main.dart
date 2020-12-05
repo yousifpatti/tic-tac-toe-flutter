@@ -34,6 +34,7 @@ class _GameScreenState extends State<GameScreen> {
   var array = new List(9);
   var arrayPlaceHolder = new List(10);
   bool easyMode = false;
+  bool isComplexity = false;
   Color _color = Colors.amber[600];
   @override
   Widget build(BuildContext context) {
@@ -110,6 +111,16 @@ class _GameScreenState extends State<GameScreen> {
               },
               value: easyMode,
               selected: easyMode,
+            ),
+            CheckboxListTile(
+              title: Text('Complexity'),
+              onChanged: (bool value) {
+                setState(() {
+                  value ? isComplexity = true : isComplexity = false;
+                });
+              },
+              value: isComplexity,
+              selected: isComplexity,
             )
           ],
         ),
@@ -255,7 +266,7 @@ class _GameScreenState extends State<GameScreen> {
         }
       }
     }
-    if (!easyMode) {
+    if (isComplexity) {
       complexity();
     }
   }
